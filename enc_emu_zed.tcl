@@ -97,4 +97,4 @@ open_run impl_1
 report_timing_summary -file timing_impl.log
 
 # Make .sdk folder
-file copy -force $project_name.runs/impl_1/system_top.sysdef noos/system_top.hdf
+file copy -force $project_name.runs/impl_1/system_wrapper.sysdef no-os/system_wrapper.hdf
