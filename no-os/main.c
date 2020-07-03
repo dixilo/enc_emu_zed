@@ -86,9 +86,11 @@ int send_uart_dialog(XUartLite *inst){
 
 int main()
 {
-	int menu_num;
+	long menu_num;
+	char input_buf[256];
+	char* end_ptr;
 	int ret;
-	XUartLite* uart_lite;
+	XUartLite uart_lite;
 
 	// Platform initialization
     init_platform();
@@ -102,13 +104,13 @@ int main()
     // UART initialization
     print("## UART INIT ##\n\r");
 
-    ret = XUartLite_Initialize(uart_lite, UART_DEV_ID);
+    ret = XUartLite_Initialize(&uart_lite, UART_DEV_ID);
 	if (ret != XST_SUCCESS){
 		print("## UART INIT FAIL.##\n\r");
 		return XST_FAILURE;
 	}
 
-	ret = XUartLite_SelfTest(uart_lite);
+	ret = XUartLite_SelfTest(&uart_lite);
 	if (ret != XST_SUCCESS){
 		print("## UART SELF TEST FAIL.##\n\r");
 		return XST_FAILURE;
@@ -127,12 +129,13 @@ int main()
     	print("6. STOP\n\r");
     	print("PLEASE SELECT MENU NUM: ");
 
-    	ret = scanf("%d", &menu_num);
+    	ret = scanf("%s", input_buf);
 
     	if ( ret == EOF ){
     		print("INVALID INPUT.\n\r");
-    		continue;
     	}
+
+    	menu_num = strtol(input_buf, &end_ptr, 10);
 
     	switch(menu_num){
     	case 1:
@@ -148,7 +151,7 @@ int main()
     		send_z_pulse();
     		break;
     	case 5:
-    		send_uart_dialog(uart_lite);
+    		send_uart_dialog(&uart_lite);
     		break;
     	case 6:
     		stop();
