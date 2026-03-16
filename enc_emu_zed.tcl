@@ -1,7 +1,7 @@
 ## Incremental Encoder Emulator
 # This project is for Zedboard
-set p_device "xc7z020clg484-1"
-set p_board "em.avnet.com:zed:part0:1.4"
+set p_device "xc7z020clg400-1"
+set p_board "digilentinc.com:zybo-z7-20:part0:1.0"
 
 set sys_zynq 1
 set project_name enc_emu_zed
