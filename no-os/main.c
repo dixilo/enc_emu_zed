@@ -69,20 +69,22 @@ int send_z_pulse(){
 
 
 int send_uart_dialog(XUartLite *inst){
-	u8 uart_str[16];
-	int ret;
+    u8 uart_str[16];
 
-	print("PLEASE PUT UART STRING: ");
-	ret = scanf("%s", uart_str);
-	if (ret == EOF){
-		print("INVALID INPUT.\n\r");
-		return -1;
-	}
+    print("PLEASE PUT UART STRING: ");
 
-	XUartLite_Send(inst, uart_str, sizeof(uart_str));
+    if (fgets((char*)uart_str, sizeof(uart_str), stdin) == NULL){
+        print("INVALID INPUT.\n\r");
+        return -1;
+    }
 
-	return 0;
+    int len = strlen((char*)uart_str);
+
+    XUartLite_Send(inst, uart_str, len);
+
+    return 0;
 }
+
 
 int main()
 {
