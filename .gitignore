@@ -9,3 +9,4 @@
 gomi/
 Packages/
 *.log
+.DS_Store
