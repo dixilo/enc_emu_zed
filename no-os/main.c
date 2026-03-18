@@ -13,7 +13,7 @@
 #define SPEED_MASK    0xFFFFFFF8
 #define UART_DEV_ID   XPAR_AXI_UARTLITE_DEVICE_ID
 
-#define UART_BIN_LEN  5
+#define UART_BIN_LEN  6
 
 int set_pol(int pol){
     int cur_status;
@@ -105,7 +105,7 @@ int read_exact_stdin(u8 *buf, int len){
 /*
  * PC -> Zybo:
  *   "5\n"
- *   55 00 00 00 00   (生バイナリ5バイト)
+ *   55 00 00 00 00  00 (生バイナリ6バイト)
  *
  * Zybo -> FWD UART:
  *   上記5バイトをそのまま再送信
@@ -114,7 +114,7 @@ int send_uart_dialog(XUartLite *inst){
     u8 uart_bin[UART_BIN_LEN];
     int i;
 
-    print("PLEASE PUT 5 BYTES.\n\r");
+    print("PLEASE PUT 6 BYTES.\n\r");
 
     /* メニュー入力の "5\n" で残った改行を捨てる */
     if (discard_until_newline() != 0){
@@ -122,7 +122,7 @@ int send_uart_dialog(XUartLite *inst){
         return -1;
     }
 
-    /* 生バイナリ5バイトをそのまま読む */
+    /* 生バイナリ6バイトをそのまま読む */
     if (read_exact_stdin(uart_bin, UART_BIN_LEN) != 0){
         print("FAILED TO READ UART BINARY.\n\r");
         return -1;
@@ -134,7 +134,7 @@ int send_uart_dialog(XUartLite *inst){
     }
     xil_printf("\n\r");
 
-    /* FWD側へ5バイトそのまま転送 */
+    /* FWD側へ6バイトそのまま転送 */
     XUartLite_Send(inst, uart_bin, UART_BIN_LEN);
     while (XUartLite_IsSending(inst));
 

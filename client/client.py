@@ -6,7 +6,7 @@ import sys
 
 PORT = '/dev/cu.usbserial-210351B7C04D1'
 BAUD = 115200
-DATA = bytes([0x55, 0x00, 0x00, 0x00, 0x02])
+DATA = bytes([0x55, 0x00, 0x00, 0x00, 0x00, 0x02])
 
 PROMPT_PAYLOAD = b'PLEASE PUT 5 BYTES.'
 PROMPT_MENU = b'PLEASE SELECT MENU NUM:'
